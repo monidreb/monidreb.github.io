@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Nuestra Biblioteca de Contenido (Solo ES) - Ordenado</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+    .comic { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-bottom: 1px solid #ddd; }
+    .comic:last-child { border-bottom: none; }
+    .comic-title { flex-grow: 1; }
+    .lang-btn { 
+      margin-left: 0.8rem; 
+      text-decoration: none; 
+      padding: 5px 10px; 
+      border: 1px solid #007bff; 
+      border-radius: 4px; 
+      color: #007bff;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .lang-btn:hover { background-color: #007bff; color: white; }
+  </style>
+</head>
+<body>
+  <h1>Catálogo de Contenido (¡Solo Español disponible por ahora!)</h1>
+
+  <div id="list"></div>
+
+  <script>
+    // -------------------------------------------------------------------
+    // CATÁLOGO DE CONTENIDO - ORDENADO NUMÉRICAMENTE POR TÍTULO
+    // -------------------------------------------------------------------
+    // NOTA: Recuerda que los slugs deben coincidir con tus nombres de archivo en la carpeta 'comics/'
+    const comics = [
+      { 
+        title: '1. La Química Detrás del Tratamiento del agua en barranquilla', 
+        slug: '1.La-Química-Detrás-del-Tratamiento-del-Agua-en-Barranquilla_es' 
+      },
+      { 
+        title: '5. Impacto de los microplásticos en la cadena alimenticia marina', 
+        slug: '5.Impacto-de-los-microplasticos-en-la-cadena-alimenticia-marina_es' 
+      },
+      { 
+        title: '8. La química del suelo y su relación con los cultivos del caribe', 
+        slug: '8.la-química-del-suelo-y-su-relación-con-los-cultivos-del-Caribe_es' 
+      },
+      { 
+        title: '9. Río de sombras negras', 
+        slug: '9.RÍO-DE-SOMBRAS-NEGRAS_es' 
+      },
+      { 
+        title: '10. Oxidación de metales en estructuras costeras', 
+        slug: '10.Oxidacion-de-metales-en-estructuras-costeras_es' 
+      },
+      { 
+        title: '12. la química de la erosión costera en el caribe', 
+        slug: '12.la-química-de-la-erosion-costera-en-el-caribe_es' 
+      },
+      { 
+        title: '13. El papel del ozono en la calidad del aire de la ciudad', 
+        slug: '13.El-papel-del-ozono-en-la-calidad-del-aire-de-la-ciudad_es' 
+      },
+      { 
+        title: '16. Composición Química de los Insecticidas y su efecto en los ecosistemas', 
+        slug: '16.Composición-química-de-los-insecticidas-y-su-efecto-en-los-ecosistemas_es' 
+      },
+      { 
+        title: '17. El Impacto de la Química en la Protección de arrecifes de coral', 
+        slug: '17.El-impacto-de-la-química-en-la-protección-de-arrecifes-de-coral_es' 
+      },
+      { 
+        title: 'La pesca tradicional y la conservación de especies', 
+        slug: '19.la-pesca-tradicional-y-la-conservación-de-especies_es' 
+      }
+    ];
+
+    // -------------------------------------------------------------------
+    // FUNCIÓN DE RENDERIZADO (Muestra ES, usa el orden definido arriba)
+    // -------------------------------------------------------------------
+    const listEl = document.getElementById('list');
+    
+    comics.forEach(c => {
+      const el = document.createElement('div');
+      el.className = 'comic';
+      
+      // La URL se construye usando el slug + el sufijo '_es.pdf'
+      const url_es = `viewer.html?file=${c.slug}_es.pdf`;
+      
+      el.innerHTML = `
+        <div class="comic-title"><strong>${c.title}</strong></div>
+        <div class="comic-actions">
+          <a class="lang-btn" href="${url_es}" target="_blank">ES</a>
+        </div>
+      `;
+      listEl.appendChild(el);
+    });
+  </script>
+</body>
+</html>
