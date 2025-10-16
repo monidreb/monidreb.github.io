@@ -53,10 +53,10 @@
     // -------------------------------------------------------------------
     // CONFIGURACIÓN DE RUTAS Y VARIABLES GLOBALES
     // -------------------------------------------------------------------
-    
     // Ruta donde deben estar tus archivos PDF dentro del repositorio
-    const PDF_BASE_PATH = './comics/'; 
-
+    
+   const PDF_BASE_PATH = '/comics/'; // Nota el slash inicial y la ausencia del punto
+    
     let pdfDoc = null, 
         pageNum = 1, 
         pageRendering = false;
@@ -65,4 +65,5 @@
     const ctx = canvas.getContext('2d');
     
     // Necesario para PDF.js: apunta a la ubicación del worker.js
+
     pdfjsLib.GlobalWorkerOptions.workerSrc = '
