@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Visor de Contenido - PDF.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; font-family: sans-serif; }
+    /* Contenedor del visor: asegura que el canvas no se desborde */
+    .viewer-container { 
+      overflow: auto; /* Permite scroll y zoom en dispositivos grandes */
+      text-align: center;
+      min-height: calc(100vh - 50px); /* Ocupa casi toda la altura de la pantalla */
+      padding: 10px 0;
+    }
+    nav { 
+      padding: 8px; 
+      background: #f8f8f8; 
+      display: flex; 
+      justify-content: center; 
+      gap: 15px; 
+      border-bottom: 1px solid #eee; 
+      position: sticky; /* Fija la barra de navegación arriba */
+      top: 0;
+      z-index: 10;
+    }
+    button { 
+      padding: 8px 15px; 
+      cursor: pointer; 
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 4px;
+    }
+    #page-info {
+      align-self: center; /* Centra el texto de la página */
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <button id="prev">Página Anterior ‹</button>
+    <span id="page-info">Cargando...</span>
+    <button id="next">Página Siguiente ›</button>
+  </nav>
+
+  <div class="viewer-container">
+    <canvas id="pdf-canvas"></canvas>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
+
+  <script>
+    // -------------------------------------------------------------------
+    // CONFIGURACIÓN DE RUTAS Y VARIABLES GLOBALES
+    // -------------------------------------------------------------------
+    
+    // RUTA CRÍTICA: La barra inicial (/) es importante para GitHub Pages
+    const PDF_BASE_PATH = '/comics/'; 
+
+    let pdfDoc = null, 
+        pageNum = 1, 
+        pageRendering = false;
+        
+    const canvas = document.getElementById('pdf-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Necesario para PDF.js: apunta a la ubicación del worker.js
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.worker.min.js';
+
+    // 1. Obtener el nombre del archivo de la URL (?file=...)
+    const params = new URLSearchParams(location.search);
+    const fileName = params.get('file');
+    
+    // 2. Definir la URL de acceso directo (ruta absoluta)
+    // Ejemplo: /comics/9.R
